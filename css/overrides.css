@@ -1,0 +1,97 @@
+/* ================================================
+   FORCEFUL OVERRIDES (FINAL FIXES)
+   ================================================ */
+
+/* 1. NUCLEAR OPTION FOR FILM STRIP */
+body .film-strip-wrapper,
+#filmStripWrapper,
+.film-strip-diagonal,
+.film-frames,
+[class*="film-strip"] {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    height: 0 !important;
+    width: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    z-index: -9999 !important;
+}
+
+/* 2. GUARANTEED LEGIBILITY FOR SUPPORT BOX */
+.support-box {
+    background: #ffffff !important;
+    /* Solid white */
+    background: rgba(255, 255, 255, 0.98) !important;
+    /* Almost solid */
+    color: #000000 !important;
+    border: 1px solid #e0e0e0 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2) !important;
+    backdrop-filter: none !important;
+    /* Disable blur to avoid rendering issues */
+    border-radius: 8px !important;
+    padding: 2rem !important;
+    margin-top: 2rem !important;
+}
+
+.support-title {
+    color: #000000 !important;
+    font-weight: 800 !important;
+    text-shadow: none !important;
+}
+
+.support-text {
+    color: #111111 !important;
+    font-weight: 500 !important;
+    text-shadow: none !important;
+}
+
+/* 3. ENSURE COUNTER IS VISIBLE BUT NOT UGLY */
+.findings-counter {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    border-radius: 4px !important;
+    padding: 8px 12px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    color: #000 !important;
+    text-shadow: none !important;
+    bottom: 20px !important;
+    left: 20px !important;
+}
+
+color: #d13a3a !important;
+}
+
+/* 4. FORCE CTA VISIBILITY AND CLICKABILITY - CRITICAL FIX */
+.cta-glass-card {
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: none !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+    z-index: 2147483647 !important;
+    /* Max Z-Index */
+    position: fixed !important;
+    bottom: 2rem !important;
+    right: 2rem !important;
+    pointer-events: auto !important;
+    max-width: 300px !important;
+    display: block !important;
+}
+
+.cta-glass-button {
+    background: #000000 !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* 5. UTILITY TO HIDE CTA ON MODAL OPEN */
+body.modal-open .cta-glass-card,
+.cta-hidden {
+    display: none !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
+    z-index: -1 !important;
+}

@@ -1,0 +1,203 @@
+/* ================================================
+   RESPONSIVE DESIGN - FOTOS EN LA CALLE
+   Adaptive layout for Mobile, Tablet, and Desktop
+   ================================================ */
+
+/* === TABLET & SMALL DESKTOP (< 1024px) === */
+@media (max-width: 1024px) {
+    .manifesto-sidebar {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: var(--spacing-md);
+        pointer-events: auto;
+        background: transparent; /* Changed to let body cream color through */
+        z-index: 101;
+    }
+
+    .site-title {
+        font-size: 3.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .manifesto-text {
+        margin-top: 1.5rem;
+    }
+
+    .canvas-container {
+        min-height: 100vh;
+        padding-top: 2rem;
+        /* Prevent photos from spilling over into the map section on mobile */
+        overflow: hidden;
+    }
+
+    .film-strip-diagonal {
+        display: none;
+        /* Hide on smaller screens to avoid clutter */
+    }
+
+    .cta-glass-card {
+        position: relative;
+        bottom: 0;
+        right: 0;
+        margin: 3rem auto;
+        max-width: 90%;
+        text-align: center;
+    }
+
+    .about-section {
+        margin-top: 5rem;
+        padding: 6rem 1.5rem;
+    }
+}
+
+/* === MOBILE (< 768px) === */
+@media (max-width: 768px) {
+    :root {
+        --spacing-lg: 2rem;
+        --spacing-xl: 3rem;
+    }
+
+    .site-title {
+        font-size: 2.8rem;
+    }
+
+    .main-nav {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+        margin-bottom: 0;
+        padding-left: 0;
+    }
+
+    .nav-link::before {
+        display: none;
+    }
+
+    /* Better photo sizing for mobile */
+    .photo-draggable {
+        width: 150px !important;
+        max-width: 150px !important;
+    }
+
+    /* Modal Mobile Stack */
+    .modal-content {
+        flex-direction: column;
+        width: 95vw;
+        height: 90vh;
+        gap: 1rem;
+        overflow-y: auto;
+        padding-top: 2rem;
+    }
+
+    .modal-photo {
+        width: 100%;
+        max-height: 70vh;
+        flex: 1;
+    }
+
+    .modal-photo img {
+        max-height: 100%;
+        width: 100%;
+        object-fit: contain;
+    }
+
+    .photo-details {
+        flex: 0 0 auto;
+        width: 90%;
+        margin: 0 auto;
+        padding: 1rem;
+    }
+
+    .modal-close {
+        top: 10px;
+        right: 10px;
+        color: white;
+    }
+
+    .metadata-grid {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .about-title {
+        font-size: 2.2rem;
+    }
+
+    .about-content {
+        font-size: 1rem;
+    }
+
+    .map-section .section-title {
+        font-size: 2.2rem;
+    }
+
+    .map-placeholder {
+        height: 300px;
+    }
+
+    /* Mobile Performance Optimizations */
+    #custom-cursor {
+        display: none !important;
+    }
+
+    body {
+        cursor: auto !important;
+    }
+
+    /* Disable heavy animations on mobile */
+    .photo-draggable img {
+        filter: none !important;
+        transition: none !important;
+    }
+
+    .photo-draggable.dragging img {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Simplify decorations on mobile */
+    .decoration-layer {
+        display: none;
+    }
+
+    /* Ensure photos are visible and properly sized */
+    .canvas-container {
+        min-height: 150vh;
+        padding: 1rem 0.5rem;
+    }
+
+    .photo-draggable {
+        will-change: auto !important;
+    }
+}
+
+
+/* === SMALL MOBILE (< 480px) === */
+@media (max-width: 480px) {
+    .site-title {
+        font-size: 2.2rem;
+    }
+
+    .photo-draggable {
+        width: 140px !important;
+        max-width: 140px !important;
+    }
+
+    .cta-glass-card {
+        padding: 1rem;
+    }
+
+    .cta-glass-title {
+        font-size: 1.1rem;
+    }
+}
+
+/* === DARK BG ADJUSTMENTS === */
+/* Text color is handled in main.css - no background needed */

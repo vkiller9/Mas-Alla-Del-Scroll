@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description"
+        content="Fotos en la Calle - Proyecto de arte urbano por Victor De Dompablo. Si has encontrado una foto en Madrid, bienvenido.">
+    <meta name="author" content="Victor De Dompablo">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Fotos en la Calle - Victor De Dompablo">
+    <meta property="og:description" content="Arte urbano gratuito en las calles de Madrid">
+    <meta property="og:type" content="website">
+
+    <title>Fotos en la Calle | Victor De Dompablo</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Special+Elite&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Nothing+You+Could+Do&display=swap"
+        rel="stylesheet">
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="css/main.css?v=4.1">
+    <link rel="stylesheet" href="css/responsive.css?v=3.2">
+    <link rel="stylesheet" href="css/gallery.css?v=3.0">
+    <link rel="stylesheet" href="css/support.css?v=3.0">
+    <link rel="stylesheet" href="css/overrides.css?v=3.0"> <!-- FINAL FIXES -->
+
+    <!-- Leaflet CSS (Non-blocking) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" media="print"
+        onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+    </noscript>
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- Background Decoration Layer -->
+    <div class="decoration-layer" id="decorationLayer">
+        <!-- Coffee Stain Removed -->
+
+    <!-- Handwritten Notes (Will be positioned by JS) -->
+    </div>
+
+    <!-- Hero Reception Section (The Landing) -->
+    <section class="hero-reception" id="reception">
+        <div class="hero-content">
+            <h2 class="hero-title">Has encontrado un instante.</h2>
+            <p class="hero-subtitle">Dejo fotografías por España para que el azar decida quién las encuentra. Hoy, esa persona eres tú.</p>
+            
+            <div class="hero-actions">
+                <a href="archivo.html" class="hero-gallery-btn">Ver el archivo completo</a>
+                <a href="https://airtable.com/app8HpaFiFwdBauCp/pag2ZHUTFnmZFNfmI/form" target="_blank" rel="noopener noreferrer" class="hero-secondary-btn" id="btnFoundPhoto">¿Has encontrado una foto?</a>
+            </div>
+            <a href="#experiencia" class="hero-scroll-indicator" aria-label="Desliza para explorar" onclick="document.getElementById('manifesto-sidebar').scrollIntoView({behavior: 'smooth'})">
+                Explora más
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M6 9l6 6 6-6" />
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Manifesto Section - Fixed Left (Moved to root for best blending) -->
+    <aside class="manifesto-sidebar" id="manifesto-sidebar">
+        <!-- Removed main title per user request so Hero title is the only one -->
+
+        <nav class="main-nav">
+            <a href="historias.html" class="nav-link"><span class="nav-flash"></span>Historias</a>
+            <a href="archivo.html" class="nav-link"><span class="nav-flash"></span>Galería</a>
+            <a href="#contacto" class="nav-link"><span class="nav-flash"></span>Contacto</a>
+        </nav>
+
+        <div class="manifesto-text">
+            <p class="hero-subtitle" style="text-align: center;">Soy Víctor. Quiero dejar un legado bonito en este mundo, incluso para quien no está cerca. Vivimos tan deprisa que consumimos y olvidamos. Por eso he creado este proyecto: arte más allá del scroll.</p>
+            <p class="hero-subtitle" style="text-align: center; margin-top: 1rem;">Fotografías que te obligan a parar un instante. En la sección de historias, tú también eres protagonista: comparte tu arte, cuéntame qué te pareció la foto, ¡lo que quieras! Este proyecto busca personas que quieran aportar su granito de arena.</p>
+        </div>
+    </aside>
+
+        <!-- Main Canvas Container -->
+    <div class="canvas-container" id="canvasContainer">
+
+        <!-- Draggable Photos Canvas (20 fotos definitivas) -->
+        <div class="photos-canvas" id="photosCanvas">
+            <div class="photo-draggable" data-photo="AT-001">
+                <img src="fotos_web/AT-001.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-002">
+                <img src="fotos_web/AT-002.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-003">
+                <img src="fotos_web/AT-003.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-004">
+                <img src="fotos_web/AT-004.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-005">
+                <img src="fotos_web/AT-005.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-006">
+                <img src="fotos_web/AT-006.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-007">
+                <img src="fotos_web/AT-007.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-008">
+                <img src="fotos_web/AT-008.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="AT-009">
+                <img src="fotos_web/AT-009.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-001">
+                <img src="fotos_web/BN-001.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-002">
+                <img src="fotos_web/BN-002.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-003">
+                <img src="fotos_web/BN-003.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-004">
+                <img src="fotos_web/BN-004.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-005">
+                <img src="fotos_web/BN-005.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-006">
+                <img src="fotos_web/BN-006.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-007">
+                <img src="fotos_web/BN-007.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-008">
+                <img src="fotos_web/BN-008.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-009">
+                <img src="fotos_web/BN-009.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-010">
+                <img src="fotos_web/BN-010.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+            <div class="photo-draggable" data-photo="BN-011">
+                <img src="fotos_web/BN-011.jpg" alt="Fotografía urbana Madrid" loading="lazy">
+            </div>
+        </div>
+
+        <!-- 35mm Film Strip - Diagonal with Thumbnails (Interactive & Safe) -->
+        <div class="film-strip-diagonal" id="filmStripDiagonal">
+            <div class="film-strip-content">
+                <!-- Film reel icon -->
+                <div class="film-reel">
+                    <svg viewBox="0 0 100 100" width="80" height="80">
+                        <circle cx="50" cy="50" r="45" fill="#2a2a2a" stroke="#1a1a1a" stroke-width="2" />
+                        <circle cx="50" cy="50" r="35" fill="none" stroke="#3a3a3a" stroke-width="1" />
+                        <circle cx="50" cy="50" r="25" fill="none" stroke="#3a3a3a" stroke-width="1" />
+                        <circle cx="50" cy="50" r="15" fill="none" stroke="#3a3a3a" stroke-width="1" />
+                        <circle cx="50" cy="15" r="5" fill="#4a4a4a" />
+                        <circle cx="85" cy="50" r="5" fill="#4a4a4a" />
+                        <circle cx="50" cy="85" r="5" fill="#4a4a4a" />
+                        <circle cx="15" cy="50" r="5" fill="#4a4a4a" />
+                        <circle cx="70" cy="30" r="5" fill="#4a4a4a" />
+                        <circle cx="70" cy="70" r="5" fill="#4a4a4a" />
+                        <circle cx="30" cy="70" r="5" fill="#4a4a4a" />
+                        <circle cx="30" cy="30" r="5" fill="#4a4a4a" />
+                    </svg>
+                </div>
+
+                <!-- Film frames with thumbnails (Clickable) -->
+                <div class="film-frames" id="filmFramesContainer">
+                    <!-- Top perforations -->
+                    <div class="film-perforations top"></div>
+                    <div class="frame" data-target="AT-003"><img src="fotos_web/AT-003.jpg" alt=""></div>
+                    <div class="frame" data-target="UR-018"><img src="fotos_web/UR-018.jpg" alt=""></div>
+                    <div class="frame" data-target="UR-025"><img src="fotos_web/UR-025.jpg" alt=""></div>
+                    <div class="frame" data-target="BN-016"><img src="fotos_web/BN-016.jpg" alt=""></div>
+                    <div class="frame" data-target="BN-014"><img src="fotos_web/BN-014.jpg" alt=""></div>
+                    <div class="frame" data-target="UR-001"><img src="fotos_web/UR-001.jpg" alt=""></div>
+                </div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact-section">
+        <div class="contact-container">
+            <h2 class="contact-title">¿Nos hemos cruzado?</h2>
+            <div class="contact-content">
+                <p>Si has encontrado una de mis fotografías o te ha gustado el proyecto, me encantaría saber de ti.</p>
+                <p style="margin-top: 0.75rem;">Para recibir tu foto en digital, usa el botón <strong>¿Has encontrado una foto?</strong> en el inicio. Para cualquier otra cosa, escríbeme aquí abajo.</p>
+                
+                <div class="contact-links">
+                    <a href="mailto:victordompablo@gmail.com" class="contact-link" aria-label="Enviar email">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                            <polyline points="22,6 12,13 2,6" />
+                        </svg>
+                        Escríbeme
+                    </a>
+                    
+                    <a href="https://instagram.com/masalladelscroll" target="_blank" class="contact-link" aria-label="Visitar Instagram">
+                        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                        @masalladelscroll
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; Más Allá del Scroll | <a href="#" id="privacyLink" style="color: inherit; text-decoration: underline; cursor: pointer;">Privacidad</a></p>
+    </footer>
+
+    <!-- Photo Detail Modal (Refined) -->
+    <div class="modal" id="photoModal">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content">
+            <!-- Close Button -->
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+
+            <!-- Photo Display (Original ratio, no frame) -->
+            <div class="modal-photo">
+                <img src="" alt="" id="modalImage">
+            </div>
+
+            <!-- Photo Details Panel -->
+            <div class="photo-details">
+                <h3 class="photo-title" id="modalTitleCode">EXP-001</h3>
+
+                <div class="support-box">
+                    <div class="support-options" style="display: flex; justify-content: center; margin-top: 1.5rem;">
+                        <a href="https://ko-fi.com/victordedompablo" target="_blank" class="modal-cta-button donation-btn"
+                            style="background: #000; color: #fff; width: 100%; text-align: center; justify-content: center; padding: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: flex;">
+                            APOYAR EL PROYECTO ☕
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Simulation Overlay -->
+        <div id="paymentOverlay" class="payment-overlay">
+            <div class="payment-modal">
+                <div class="payment-spinner" id="paymentSpinner"></div>
+                <div class="payment-success-icon" id="paymentSuccess">✓</div>
+                <div class="payment-status" id="paymentStatus">Conectando con Stripe...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Modal -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-backdrop" id="privacyBackdrop"></div>
+        <div class="modal-content" style="max-width: 600px; padding: 2rem; background: #fff; border-radius: 8px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+            <button class="modal-close" id="privacyClose" aria-label="Cerrar" style="top: 1rem; right: 1rem; background: none; border: none; cursor: pointer;">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+            <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Aviso de Privacidad</h2>
+            <div style="font-family: 'Inter', sans-serif; line-height: 1.6; color: #444; font-size: 0.95rem;">
+                <p>En Más Allá del Scroll, respeto tu privacidad tanto como el arte. Al enviar el formulario de hallazgo, debes saber que:</p>
+                <p style="margin-top: 1rem;"><strong>Responsable:</strong> Victor De Dompablo (<a href="mailto:victordompablo@gmail.com" style="color: #000; text-decoration: underline; font-weight: 600;">victordompablo@gmail.com</a>).</p>
+                <p style="margin-top: 1rem;"><strong>Finalidad:</strong> Solo utilizo los datos (tu alias e historia) para publicarlos en la web como parte de la narrativa del proyecto. No se usarán para marketing ni envíos de spam.</p>
+                <p style="margin-top: 1rem;"><strong>Legitimación:</strong> Al marcar la casilla de envío, me das tu consentimiento para publicar ese contenido.</p>
+                <p style="margin-top: 1rem;"><strong>Tus derechos:</strong> En cualquier momento puedes escribirme para que borre tu historia, cambie tu alias o elimine cualquier dato tuyo de la web. Tienes derecho a acceder, rectificar o suprimir tus datos.</p>
+                <p style="margin-top: 1rem;"><strong>Conservación:</strong> Los datos se guardarán mientras el proyecto esté activo online.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="main.js?v=12.0"></script>
+</body>
+
+</html>

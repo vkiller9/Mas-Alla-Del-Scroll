@@ -1,0 +1,21 @@
+# Archivos de sistema y temporales
+.DS_Store
+Thumbs.db
+
+# Herramientas internas (no necesarias para la web)
+crear_documento.py
+*.md
+!README.md
+
+# Carpetas de fotos originales (solo subiremos las optimizadas)
+"Fotos definitivas"/
+"FOTOS DEFINITIVAS"/
+
+# Directorios de configuración de agentes (si existieran)
+.gemini/
+.agents/
+.agent/
+brain/
+
+#Logs
+*.log

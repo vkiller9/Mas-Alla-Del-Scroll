@@ -1,0 +1,700 @@
+/* ================================================
+   FOTOS EN LA CALLE - INTERACTIVE CANVAS
+   Brutalist Minimalist Aesthetic
+   Victor De Dompablo
+   ================================================ */
+
+/* === VARIABLES === */
+:root {
+    /* Colors - Luminous Palette */
+    --color-background: #F9F9FB;
+    --color-accent: #E0E7FF;
+    --color-text: #1A1A1A;
+    --color-text-muted: #6B6B6B;
+    --color-white: #FFFFFF;
+    --color-shadow: rgba(0, 0, 0, 0.08);
+    --color-shadow-strong: rgba(0, 0, 0, 0.15);
+    --color-shadow-drag: rgba(0, 0, 0, 0.25);
+
+    /* Typography */
+    --font-serif: 'Playfair Display', serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'Inter', sans-serif;
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 2rem;
+    --spacing-lg: 3rem;
+    --spacing-xl: 4rem;
+    --spacing-2xl: 6rem;
+
+    /* Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-normal: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* === RESET & BASE === */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* Film Grain Texture Overlay - Persistent */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><filter id="noiseFilter"><feTurbulence type="fractalNoise" baseFrequency="3.5" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noiseFilter)"/></svg>');
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* === PHYSICAL GALLERY AESTHETIC === */
+
+/* Wall Texture */
+body {
+    background-color: #F4F1EA;
+    /* Cream Soft */
+    background-image:
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E"),
+        linear-gradient(to bottom right, rgba(0, 0, 0, 0.02), rgba(0, 0, 0, 0.05));
+    background-blend-mode: overlay;
+}
+
+/* === FRAMES STYLES === */
+
+
+/* Draggable Photo Container */
+.photo-draggable,
+.photo-card {
+    position: absolute;
+    width: 240px;
+    height: auto;
+    cursor: grab;
+    z-index: 1;
+    transform-origin: center;
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+    will-change: transform, left, top;
+}
+
+.photo-draggable:active,
+.photo-card:active {
+    cursor: grabbing;
+}
+
+
+/* Main Canvas Container */
+.canvas-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    /* Prevent dragging outside */
+}
+
+/* Base Photo Style - Reset */
+.photo-draggable img,
+.photo-card img {
+    width: 100%;
+    /* CRITICAL FIX: Constrain image to container width */
+    height: auto;
+    display: block;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+    transition: all var(--transition-normal);
+    transform: translateZ(0);
+    /* Hardware accel */
+    border: none;
+}
+
+/* Polaroid Style */
+.frame-polaroid img {
+    padding: 12px 12px 45px 12px;
+    background-color: #fff;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 2px, #fbfbfb 2px, #fbfbfb 4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Kodak / Analog Style */
+.frame-kodak img {
+    padding: 18px;
+    /* Black border width */
+    background-color: #1a1a1a;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    /* Film sprocket holes simulation would be complex via CSS alone, using border for now */
+    border: 2px solid #000;
+}
+
+.frame-kodak::after {
+    /* Optional: Add "KODAK" text or numbers via pseudo-element if desired */
+    content: "36";
+    position: absolute;
+    bottom: 5px;
+    right: 10px;
+    color: rgba(255, 255, 255, 0.4);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    pointer-events: none;
+    z-index: 2;
+}
+
+/* Fine Art Style */
+.frame-fineart img {
+    padding: 25px;
+    background-color: #fdfdfd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border: 1px solid #e0e0e0;
+}
+
+/* No Frame / Raw Style */
+.frame-none img {
+    padding: 0;
+    border: 4px solid white;
+    /* Minimal border */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Dragging States for Frames */
+.photo-draggable.dragging.frame-polaroid img {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+}
+
+.photo-draggable.dragging.frame-kodak img {
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.photo-draggable.dragging.frame-fineart img {
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+}
+
+.photo-draggable.dragging.frame-none img {
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+}
+
+
+/* === WASHI TAPE EFFECT === */
+.washi-tape {
+    position: absolute;
+    width: 30px;
+    height: 60px;
+    background-color: rgba(255, 255, 200, 0.4);
+    /* Masking tape yellow */
+    opacity: 0.8;
+    z-index: 10;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%) rotate(5deg);
+}
+
+.washi-tape-corner {
+    width: 60px;
+    height: 25px;
+    top: -10px;
+    left: -15px;
+    transform: rotate(-45deg);
+}
+
+/* === DECORATIVE ELEMENTS === */
+.decoration-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    /* Behind photos (photos are z-index 1) */
+    overflow: hidden;
+}
+
+.handwritten-note {
+    font-family: 'Nothing You Could Do', cursive;
+    /* We need to import this */
+    font-size: 1.2rem;
+    color: rgba(40, 40, 40, 0.6);
+    position: absolute;
+    transform: rotate(-5deg);
+    max-width: 200px;
+    line-height: 1.4;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.4);
+}
+
+.coffee-stain {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 8px solid rgba(139, 69, 19, 0.08);
+    box-shadow: inset 0 0 20px rgba(139, 69, 19, 0.05);
+    filter: blur(2px);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* === REFINED CTA CARD (Bottom Right) === */
+.cta-glass-card {
+    position: fixed;
+    top: auto;
+    bottom: 30px;
+    right: 30px;
+    max-width: 260px;
+    /* Reduced by ~20% */
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.3);
+    /* Lower opacity */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    z-index: 1000;
+    /* High z-index */
+}
+
+.cta-glass-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.cta-glass-text {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.cta-glass-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    background: rgba(20, 20, 20, 0.9);
+}
+
+/* === INTERACTIVE FILM STRIP === */
+.film-strip-diagonal {
+    z-index: 900;
+    /* High layer but below modal/CTA */
+    cursor: pointer;
+    pointer-events: auto;
+    /* Enable clicks */
+    transition: transform 0.1s ease-out, opacity 0.3s;
+}
+
+.frame {
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid #3a3a3a;
+}
+
+.frame:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    z-index: 10;
+}
+
+.frame.active {
+    border-color: #E0E7FF;
+    box-shadow: 0 0 20px rgba(224, 231, 255, 0.6);
+    transform: scale(1.15);
+}
+
+/* === MODAL REFINEMENTS === */
+/* Remove white borders/bg from modal image to show raw photo */
+.modal-photo {
+    background: transparent;
+    box-shadow: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-photo img {
+    max-height: 85vh;
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    object-fit: contain;
+}
+
+/* === GLASSMORPHISM PANEL === */
+.photo-details {
+    flex: 0 0 400px;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    padding: var(--spacing-lg);
+    overflow-y: auto;
+    max-height: 90vh;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.photo-title {
+    font-family: var(--font-serif);
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-md);
+    color: var(--color-text);
+}
+
+.photo-story {
+    margin-bottom: var(--spacing-lg);
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-text);
+}
+
+.photo-story p {
+    margin-bottom: var(--spacing-sm);
+}
+
+.photo-metadata {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    padding-top: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+}
+
+.metadata-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
+}
+
+.metadata-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+.metadata-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+}
+
+.metadata-value {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-text);
+    font-weight: 500;
+}
+
+.modal-cta-button {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background: var(--color-text);
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 1rem;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    text-align: center;
+}
+
+.modal-cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* === RESPONSIVE - MOBILE === */
+@media (max-width: 1024px) {
+    .cta-glass-card {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin: var(--spacing-md) auto;
+        max-width: 100%;
+    }
+
+    .manifesto-sidebar {
+        position: relative;
+        top: auto;
+        left: auto;
+        max-width: 100%;
+        margin-bottom: var(--spacing-lg);
+    }
+
+    .film-strip-diagonal {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .canvas-container {
+        padding: 1rem;
+    }
+
+    .photo-draggable {
+        width: 160px;
+    }
+
+    /* Modal - Stack vertically */
+    .modal-content {
+        flex-direction: column;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    .modal-photo {
+        flex: 1;
+        min-height: 250px;
+    }
+
+    .photo-details {
+        flex: 0 0 auto;
+        max-height: none;
+    }
+
+    .modal-close {
+        top: 8px;
+        right: 8px;
+    }
+
+    .metadata-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .photo-draggable {
+        width: 130px;
+    }
+
+    .site-title {
+        font-size: 2rem;
+    }
+
+    .cta-glass-card {
+        padding: var(--spacing-md);
+    }
+}
+
+/* === LOADING STATE === */
+.photo-draggable img[loading="lazy"] {
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.photo-draggable img.loaded {
+    opacity: 1;
+}
+
+/* === SCROLLBAR === */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-accent);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(224, 231, 255, 0.8);
+}
+
+/* === ACCESSIBILITY === */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+*:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+/* === PRINT STYLES === */
+@media print {
+
+    body::before,
+    .film-strip-diagonal,
+    .modal {
+        display: none !important;
+    }
+
+    .photo-draggable {
+        position: relative !important;
+        break-inside: avoid;
+    }
+}
+
+/* === MISSING STYLES RESTORED === */
+
+/* Manifesto Sidebar - Fixed Left */
+.manifesto-sidebar {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    width: 300px;
+    z-index: 100;
+    mix-blend-mode: multiply;
+}
+
+.manifesto-text {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-top: 2rem;
+    color: var(--color-text);
+}
+
+.site-title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: 2rem;
+    letter-spacing: -0.02em;
+}
+
+.nav-link {
+    display: block;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: var(--color-text);
+}
+
+/* [Removed Film Strip] */
+/* Modal - Hidden by default */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(240, 238, 230, 0.85);
+    /* Cream tint matching bg */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.modal-content {
+    position: relative;
+    z-index: 2001;
+    display: flex;
+    gap: 2rem;
+    max-width: 90vw;
+    max-height: 90vh;
+    align-items: center;
+}
+
+.modal-close {
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #1a1a1a;
+    transition: transform 0.3s;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+}
+
+/* Fix Map Section Visibility */
+.map-section {
+    position: relative;
+    background: white;
+    padding: 4rem;
+    margin-top: 100vh;
+    /* Push below canvas */
+    z-index: 50;
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 400px;
+    background: #f0f0f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #ccc;
+    font-family: var(--font-mono);
+}

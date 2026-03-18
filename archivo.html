@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description"
+        content="Galería completa - Fotos en la Calle. Todas las fotografías dejadas en las calles de Madrid por Victor De Dompablo.">
+    <meta name="author" content="Victor De Dompablo">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Galería - Fotos en la Calle">
+    <meta property="og:description" content="Archivo completo de fotos dejadas en Madrid">
+    <meta property="og:type" content="website">
+
+    <title>Galería | Fotos en la Calle</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Special+Elite&family=JetBrains+Mono:wght@400;500&family=Inter:wght@300;400;500;600&family=Nothing+You+Could+Do&display=swap"
+        rel="stylesheet">
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="css/main.css?v=4.1">
+    <link rel="stylesheet" href="css/responsive.css?v=3.2">
+    <link rel="stylesheet" href="css/gallery.css?v=2.2">
+    <link rel="stylesheet" href="css/gallery-page.css?v=2.2">
+    <link rel="stylesheet" href="css/support.css?v=2.2">
+</head>
+
+<body>
+    <!-- Custom Cursor -->
+    <div id="custom-cursor"></div>
+
+    <!-- Header with Back Button -->
+    <header class="gallery-page-header">
+        <a href="index.html" class="back-button">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+            </svg>
+            Volver
+        </a>
+        <h1 class="gallery-page-title">Archivo Completo</h1>
+    </header>
+
+    <!-- Gallery Grid Section -->
+    <section class="gallery-section">
+        <div class="gallery-header">
+            <p class="gallery-subtitle">Todas las fotos dejadas por España</p>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-loading">Cargando galería...</div>
+        </div>
+    </section>
+
+    <!-- Photo Detail Modal (Refined) -->
+    <div class="modal" id="photoModal">
+        <div class="modal-backdrop" id="modalBackdrop"></div>
+        <div class="modal-content">
+            <!-- Close Button -->
+            <button class="modal-close" id="modalClose" aria-label="Cerrar">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+
+            <!-- Photo Display (Original ratio, no frame) -->
+            <div class="modal-photo">
+                <img src="" alt="" id="modalImage">
+            </div>
+
+            <!-- Photo Details Panel -->
+            <div class="photo-details">
+                <h3 class="photo-title" id="modalTitleCode">EXP-001</h3>
+
+                <div class="support-box">
+                    <div class="support-options" style="display: flex; justify-content: center; margin-top: 1.5rem;">
+                        <a href="https://ko-fi.com/victordedompablo" target="_blank" class="modal-cta-button donation-btn"
+                            style="background: #000; color: #fff; width: 100%; text-align: center; justify-content: center; padding: 1rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; display: flex;">
+                            APOYAR EL PROYECTO ☕
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Unified Footer -->
+    <footer class="footer">
+        <p>&copy; Más Allá del Scroll | <a href="#" id="privacyLink" style="color: inherit; text-decoration: underline; cursor: pointer;">Privacidad</a></p>
+    </footer>
+
+    <!-- Unified Privacy Modal -->
+    <div class="modal" id="privacyModal">
+        <div class="modal-backdrop" id="privacyBackdrop"></div>
+        <div class="modal-content" style="max-width: 600px; padding: 2rem; background: #fff; border-radius: 8px; position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.3);">
+            <button class="modal-close" id="privacyClose" aria-label="Cerrar" style="top: 1rem; right: 1rem; background: none; border: none; cursor: pointer;">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </button>
+            <h2 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Aviso de Privacidad</h2>
+            <div style="font-family: 'Inter', sans-serif; line-height: 1.6; color: #444; font-size: 0.95rem;">
+                <p>En Más Allá del Scroll, respeto tu privacidad tanto como el arte. Al enviar el formulario de hallazgo, debes saber que:</p>
+                <p style="margin-top: 1rem;"><strong>Responsable:</strong> Victor De Dompablo (<a href="mailto:victordompablo@gmail.com" style="color: #000; text-decoration: underline; font-weight: 600;">victordompablo@gmail.com</a>).</p>
+                <p style="margin-top: 1rem;"><strong>Finalidad:</strong> Solo utilizo los datos (tu alias e historia) para publicarlos en la web como parte de la narrativa del proyecto. No se usarán para marketing ni envíos de spam.</p>
+                <p style="margin-top: 1rem;"><strong>Legitimación:</strong> Al marcar la casilla de envío, me das tu consentimiento para publicar ese contenido.</p>
+                <p style="margin-top: 1rem;"><strong>Tus derechos:</strong> En cualquier momento puedes escribirme para que borre tu historia, cambie tu alias o elimine cualquier dato tuyo de la web. Tienes derecho a acceder, rectificar o suprimir tus datos.</p>
+                <p style="margin-top: 1rem;"><strong>Conservación:</strong> Los datos se guardarán mientras el proyecto esté activo online.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/gallery-init.js?v=8.2"></script>
+    <script src="main.js?v=12.0"></script>
+</body>
+
+</html>
